@@ -15,7 +15,25 @@ class _GameState extends State<Game> {
   var activePlayer;
   var noofmoves;
 
-
+  Future<bool> _onWillPop() {
+    return showDialog(
+      context: context,
+      builder: (context) => new AlertDialog(
+        title: new Text('Are you sure?'),
+        content: new Text('Do you want to exit an App'),
+        actions: <Widget>[
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: new Text('No'),
+          ),
+          new FlatButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: new Text('Yes'),
+          ),
+        ],
+      ),
+    ) ?? false;
+  }
 
   @override
   void initState() {
@@ -191,66 +209,69 @@ class _GameState extends State<Game> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("TIC-TAC-TOE", style: TextStyle(fontStyle:FontStyle.italic,fontWeight: FontWeight.bold,fontSize: 24.0),),
-        elevation:12.0 ,
-        titleSpacing: 12.0,
-      ),
-      body: Material(
-        color: Colors.green,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Container(
-              height: 100.0,
-              child: Center(
-                  child: Text(displayTurn(),style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),)),
-            ),
-            Expanded(
-              child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                    childAspectRatio: 1.0,
-                    crossAxisSpacing: 9.0,
-                    mainAxisSpacing: 9.0,
-                  ),
-                  padding: EdgeInsets.all(10.0),
-                  itemCount: buttonList.length,
-                  itemBuilder: (context,i) => new SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                    child: RaisedButton(
-                        padding: EdgeInsets.all(8.0),
-                        onPressed: buttonList[i].enabled ? () => playGame(buttonList[i]) : null,
-                        child: Text(buttonList[i].text,style: TextStyle(fontSize:60.0,color: Colors.white,fontWeight: FontWeight.bold),),
-                        color: buttonList[i].bg,
-                        disabledColor: buttonList[i].bg,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text("TIC-TAC-TOE", style: TextStyle(fontStyle:FontStyle.italic,fontWeight: FontWeight.bold,fontSize: 24.0),),
+          elevation:12.0 ,
+          titleSpacing: 12.0,
+        ),
+        body: Material(
+          color: Colors.green,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Container(
+                height: 100.0,
+                child: Center(
+                    child: Text(displayTurn(),style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold),)),
+              ),
+              Expanded(
+                child: GridView.builder(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                      childAspectRatio: 1.0,
+                      crossAxisSpacing: 9.0,
+                      mainAxisSpacing: 9.0,
+                    ),
+                    padding: EdgeInsets.all(10.0),
+                    itemCount: buttonList.length,
+                    itemBuilder: (context,i) => new SizedBox(
+                      width: 100.0,
+                      height: 100.0,
+                      child: RaisedButton(
+                          padding: EdgeInsets.all(8.0),
+                          onPressed: buttonList[i].enabled ? () => playGame(buttonList[i]) : null,
+                          child: Text(buttonList[i].text,style: TextStyle(fontSize:60.0,color: Colors.white,fontWeight: FontWeight.bold),),
+                          color: buttonList[i].bg,
+                          disabledColor: buttonList[i].bg,
+                      ),
                     ),
                   ),
-                ),
-            ),
-            Center(
-              child: Container(
-                padding: EdgeInsets.only(top: 0.0,bottom: 20.0),
-                height: 75.0,
-                width: 350.0,
-                child: RaisedButton(
-                  elevation: 10.0,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                  child:
-                    Text("Reset", style: TextStyle(color: Colors.white,fontSize: 20.0),),
-                    color: Colors.deepPurple,
-                    onPressed: resetGame,
-                ),
               ),
-            )
-          ],
+              Center(
+                child: Container(
+                  padding: EdgeInsets.only(top: 0.0,bottom: 20.0),
+                  height: 75.0,
+                  width: 350.0,
+                  child: RaisedButton(
+                    elevation: 10.0,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                    child:
+                      Text("Reset", style: TextStyle(color: Colors.white,fontSize: 20.0),),
+                      color: Colors.deepPurple,
+                      onPressed: resetGame,
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
-      ),
 
+      ),
     );
   }
 }
