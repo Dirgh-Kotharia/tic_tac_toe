@@ -1,8 +1,13 @@
-# tic_tac_toe
+# Tic-Tac-Toe
 
-A new Flutter project.
+A tic-tac-toe Project while learning flutter
 
-## Getting Started
+## Why I build it?
+To Welcome the stable version of Flutter with the game which is still remembered and loved. 
 
-For help getting started with Flutter, view our online
-[documentation](https://flutter.io/).
+So here I welcome Flutter with the game which brought revolution in games by being the world's first graphical interface game 
+the TIC-TAC-TOE
+
+so this is basic 2 player tic-tac-toe to study flutter
+
+
